@@ -1,16 +1,17 @@
 class Admin::JobsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :update, :edit, :destroy, :index]
   before_action :require_is_admin
-  before_action :find_job_and_checkout_permission
+
   def index
-    @jobs = Job.all.recent
+    @jobs = Job.all.order("created_at DESC")
   end
+
   def new
     @job = Job.new
   end
 
   def edit
-
+  @job = Job.find(params[:id])
 
   end
 
@@ -20,42 +21,34 @@ class Admin::JobsController < ApplicationController
 
   def create
     @job = Job.new(job_params)
-    @job.user = current_user
+
     if @job.save
-      redirect_to jobs_path
+      redirect_to admin_jobs_path
     else
       render :new
     end
   end
 
   def update
-    @job.user = current_user
+    @job = Job.find(params[:id])
     if @job.update(job_params)
-      redirect_to jobs_path, notice: "Update success."
+      redirect_to admin_jobs_path, notice: "Update success."
     else
       render :edit
     end
   end
 
   def destroy
-
+  @job = Job.find(params[:id])
     @job.destroy
-    redirect_to jobs_path, alert: "Job deleted."
+    redirect_to admin_jobs_path, alert: "Job deleted."
   end
 
 
 
   private
   def job_params
-    params.require(:job).permit(:title, :description, :wage_upper_bound, :wage_lower_bound, :contact_email)
-  end
-
-  def find_job_and_checkout_permission
-    @job = Job.find(params[:id])
-
-    if current_user!= @job.user
-      redirect_to root_path, alert: "You have no permission."
-    end
+    params.require(:job).permit(:title, :description, :wage_upper_bound, :wage_lower_bound, :contact_email, :is_hidden)
   end
 
   end
