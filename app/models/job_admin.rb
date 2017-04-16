@@ -1,3 +1,0 @@
-class JobAdmin < ApplicationRecord
-
-end

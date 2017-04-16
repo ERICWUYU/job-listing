@@ -45,8 +45,6 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
-  def extension_white_list
-    %w(pdf doc htm html docx)
-  end
+
 
 end
