@@ -19,13 +19,6 @@ ActiveRecord::Schema.define(version: 20170416221652) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "job_admins", force: :cascade do |t|
-    t.integer  "job_id"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "jobs", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
@@ -36,7 +29,6 @@ ActiveRecord::Schema.define(version: 20170416221652) do
     t.integer  "wage_lower_bound"
     t.string   "contact_email"
     t.boolean  "is_hidden",        default: true
-    t.string   "attachment"
   end
 
   create_table "resumes", force: :cascade do |t|
@@ -46,13 +38,6 @@ ActiveRecord::Schema.define(version: 20170416221652) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "attachment"
-  end
-
-  create_table "uploads", force: :cascade do |t|
-    t.string   "name"
-    t.string   "attachment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,5 +1,5 @@
 class ResumesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :authenticate_user!
 
   def new
     @job = Job.find(params[:job_id])
@@ -9,6 +9,9 @@ class ResumesController < ApplicationController
   def create
     @job = Job.find(params[:job_id])
     @resume = Resume.new(resume_params)
+    @resume.job = @job
+    @resume.user = current_user
+
     if @resume.save
       redirect_to jobs_path, notice: "提交简历成功！"
     else
